@@ -9,27 +9,34 @@ export default function Home({ products }){
         <title>GreenNest - Plants & Nursery</title>
         <meta name="description" content="GreenNest - online plant shop" />
       </Head>
+
       <Header />
-      <main className="max-w-6xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold mb-6">Popular plants</h1>
-        <ProductGrid products={products} />
+
+      <main className="page-container py-10">
+        <section className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center mb-10">
+          <div>
+            <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight">Bring green home — healthy plants, expert care</h1>
+            <p className="mt-4 text-lg text-[color:var(--muted)]">
+              Browse our curated selection of easy-care indoor plants, and get personalised care guides and local delivery.
+            </p>
+            <div className="mt-6 flex gap-3">
+              <a href="#catalog" className="inline-block px-5 py-3 bg-[color:var(--brand-green)] text-white rounded-lg shadow">Shop plants</a>
+              <a href="#learn" className="inline-block px-5 py-3 border rounded-lg text-sm">Plant care guides</a>
+            </div>
+          </div>
+
+          <div className="hidden md:block">
+            <div className="w-full h-80 rounded-xl overflow-hidden card">
+              <img src="/placeholder.jpg" alt="plants" className="img-cover" />
+            </div>
+          </div>
+        </section>
+
+        <section id="catalog">
+          <h2 className="text-2xl font-bold mb-4">Popular plants</h2>
+          <ProductGrid products={products} />
+        </section>
       </main>
     </>
   )
-}
-
-export async function getStaticProps(){
-  // Using internal API route for demo in dev. Replace with real DB for production.
-  const res = await fetch('http://localhost:3000/api/sample-products').catch(()=> null)
-  let products = []
-  if(res){
-    products = await res.json()
-  } else {
-    products = [
-      { id:1, slug:'money-tree', name:'Money Tree', price:450, image:'/placeholder.jpg', description:'Great for beginners.' },
-      { id:2, slug:'snake-plant', name:'Snake Plant', price:300, image:'/placeholder.jpg', description:'Low light tolerant.' },
-      { id:3, slug:'pothos', name:'Pothos', price:250, image:'/placeholder.jpg', description:'Trailing indoor plant.' }
-    ]
-  }
-  return { props: { products } }
 }
